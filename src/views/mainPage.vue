@@ -1,7 +1,11 @@
 <template>
-  <div>main</div>
+  <div>
+    <mainHeader />
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import mainHeader from "@/components/header/mainHeader.vue";
+</script>
 
 <style></style>
