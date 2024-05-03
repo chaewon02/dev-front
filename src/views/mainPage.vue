@@ -1,11 +1,18 @@
+<script setup>
+import MainHeader from "@/components/header/MainHeader.vue";
+import Board from "@/components/board/BoardContainer.vue";
+</script>
+
 <template>
   <div>
-    <mainHeader />
+    <MainHeader />
+    <Board />
   </div>
 </template>
 
-<script setup>
-import mainHeader from "@/components/header/mainHeader.vue";
-</script>
-
-<style></style>
+<style>
+.board-container {
+  display: flex;
+  flex-direction: column;
+}
+</style>
