@@ -43,6 +43,11 @@ const loginPassword = ref("");
 
 const router = useRouter();
 
+let token = localStorage.getItem("userNo");
+if (token) {
+  router.push("/");
+}
+
 const signin = async () => {
   try {
     console.log(loginId.value, "   ", loginPassword.value);
@@ -51,7 +56,7 @@ const signin = async () => {
       userPassword: loginPassword.value,
     });
     localStorage.setItem("userNo", response.data.data.userNo);
-    localStorage.setItem("user", JSON.stringify(response.data.data));
+    // localStorage.setItem("user", JSON.stringify(response.data.data));
     console.log("signin success ! ", response);
     router.push("/");
   } catch (error) {
