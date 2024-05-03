@@ -1,28 +1,56 @@
 <script setup>
 import { ref } from "vue";
 import BoardInsert from "./BoardInsert.vue";
-// import BoardTodoList from "./BoardTodoList.vue";
 import Todo from "./TodoCard.vue";
+import axiosInstance from "@/apis/config";
 
 const todos = ref([]);
-const nextIdx = ref(1);
 
-const addTodo = (content) => {
+const getTodoList = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `/todo/list/${localStorage.getItem("userNo")}`
+    );
+    console.log("get todos success ! ", response);
+    todos.value = response.data.data;
+  } catch (error) {
+    console.log("Error get todos:", error);
+  }
+};
+getTodoList();
+
+const addTodo = async (content) => {
   const todo = {
-    todo_no: nextIdx.value,
-    content: content,
-    complete_yn: false,
-    delete_yn: false,
+    todoContent: content,
+    todoCompleteYn: false,
+    todoDeleteYn: false,
+    userNo: localStorage.getItem("userNo"),
   };
-  todos.value = todos.value.concat(todo);
-  nextIdx.value += 1;
+  try {
+    const response = await axiosInstance.post("/todo/create", todo);
+    console.log("save todo success ! ", response);
+    getTodoList();
+  } catch (error) {
+    console.log("Error save todo:", error);
+  }
 };
-const toggleChange = (index) => {
-  // axios
-  todos.value[index].complete_yn = !todos.value[index].complete_yn;
+const toggleChange = async (todoNo) => {
+  try {
+    const response = await axiosInstance.post(`/todo/complete/${todoNo}`);
+    console.log("completed todo success ! ", response);
+    getTodoList();
+  } catch (error) {
+    console.log("Error completed todo:", error);
+  }
 };
-const toggleDelete = (index) => {
-  // axios
+const toggleDelete = async (todoNo) => {
+  try {
+    const response = await axiosInstance.post(`/todo/delete/${todoNo}`);
+    console.log("delete todo success ! ", response);
+    getTodoList();
+  } catch (error) {
+    console.log("Error delete todo:", error);
+  }
 };
 </script>
 
@@ -30,15 +58,11 @@ const toggleDelete = (index) => {
   <div class="todo-list-container">
     <BoardInsert @addTodo="addTodo" />
     <div class="todo-list">
-      <div
-        v-for="(todo, index) in todos"
-        :key="todo.todo_no"
-        style="width: 100%"
-      >
+      <div v-for="todo in todos" :key="todo.todoNo" style="width: 100%">
         <Todo
           :todo="todo"
-          @toggleChange="toggleChange(index)"
-          @toggleDelete="toggleDelete(index)"
+          @toggleChange="toggleChange(todo.todoNo)"
+          @toggleDelete="toggleDelete(todo.todoNo)"
         />
       </div>
     </div>
@@ -51,6 +75,7 @@ const toggleDelete = (index) => {
 }
 .checked {
   text-decoration: line-through;
+  text-decoration-thickness: 2px;
 }
 .todo-list {
   display: flex;
