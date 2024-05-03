@@ -34,7 +34,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+let token = localStorage.getItem("userNo");
+if (token) {
+  router.push("/");
+}
+</script>
 
 <style scoped>
 h1 {

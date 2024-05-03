@@ -15,6 +15,11 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+let token = localStorage.getItem("userNo");
+if (token === null) {
+  router.push("/signin");
+}
+
 const signout = async () => {
   try {
     const response = await axiosInstance.post("/sign-out");
