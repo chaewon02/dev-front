@@ -16,16 +16,49 @@
         <span class="delete-button">&times;</span>
       </div>
     </div>
-    <div class="signin-box">
-      <input type="text" placeholder="아이디를 입력해 주세요." />
-      <input type="password" placeholder="비밀번호를 입력해 주세요." />
-      <router-link to="/" class="signin-button">로그인</router-link>
+    <form class="signin-box" @submit.prevent="signin">
+      <input
+        type="text"
+        v-model="loginId"
+        placeholder="아이디를 입력해 주세요."
+      />
+      <input
+        type="password"
+        v-model="loginPassword"
+        placeholder="비밀번호를 입력해 주세요."
+      />
+      <button class="signin-button">로그인</button>
       <router-link to="/signup" class="signup-button">회원가입</router-link>
-    </div>
+    </form>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import axiosInstance from "@/apis/config";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const loginId = ref("");
+const loginPassword = ref("");
+
+const router = useRouter();
+
+const signin = async () => {
+  try {
+    console.log(loginId.value, "   ", loginPassword.value);
+    const response = await axiosInstance.post("/sign-in", {
+      userId: loginId.value,
+      userPassword: loginPassword.value,
+    });
+    localStorage.setItem("userNo", response.data.data.userNo);
+    localStorage.setItem("user", JSON.stringify(response.data.data));
+    console.log("signin success ! ", response);
+    router.push("/");
+  } catch (error) {
+    console.log("Error signin:", error);
+  }
+};
+</script>
 
 <style scoped>
 h1 {
