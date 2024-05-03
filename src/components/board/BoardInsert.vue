@@ -5,9 +5,9 @@
         class="todo-input"
         type="text"
         v-model="todoInsert"
-        placeholder="검색어를 입력하세요."
+        placeholder="해야 할 일을 입력하세요."
       />
-      <button class="add-btn">등록하기</button>
+      <button class="add-btn" style="cursor: pointer">등록하기</button>
     </form>
   </div>
 </template>
@@ -35,7 +35,13 @@ const addTodo = (content) => {
   display: flex;
   flex-direction: row;
   margin: 20px 0;
-  width: 50%;
+  width: 40%;
+}
+
+@media (max-width: 1080px) {
+  .board-menue-container {
+    width: 100%;
+  }
 }
 select {
   font-size: 1.125rem;
@@ -53,6 +59,7 @@ select {
   font-size: 1.125rem;
   line-height: 1.5;
   margin: 0 10px;
+  width: 50%;
   &::placeholder {
     color: #707070;
   }
@@ -67,7 +74,6 @@ select {
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  height: 47px;
   border-radius: 15px;
 
   &:hover {

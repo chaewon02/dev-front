@@ -2,12 +2,31 @@
   <nav class="nav-container">
     <div class="logo">todo-list</div>
     <div class="menu">
-      <p>로그아웃</p>
+      <div class="logout-btn" @click="signout" style="cursor: pointer">
+        로그아웃
+      </div>
     </div>
   </nav>
 </template>
 
-<script></script>
+<script setup>
+import axiosInstance from "@/apis/config";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const signout = async () => {
+  try {
+    const response = await axiosInstance.post("/sign-out");
+    localStorage.removeItem("userNo");
+    localStorage.removeItem("user");
+    console.log("signout success ! ", response);
+    router.push("/signin");
+  } catch (error) {
+    console.log("Error signout:", error);
+  }
+};
+</script>
 
 <style scope>
 .nav-container {
@@ -22,6 +41,7 @@
 
 .logo {
   font-size: 20px;
+  font-weight: bolder;
   margin: 0 auto;
 }
 

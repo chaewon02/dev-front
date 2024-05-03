@@ -3,18 +3,20 @@
     <input
       type="checkbox"
       class="form-check-input"
-      :checked="props.todo.complete_yn"
+      :checked="todo.todoCompleteYn"
       @click.stop
       @change="toggleChange"
+      style="cursor: pointer"
     />
 
-    <div class="form-check-label" :class="{ checked: props.todo.complete_yn }">
-      {{ props.todo.content }}
+    <div class="form-check-label" :class="{ checked: todo.todoCompleteYn }">
+      {{ todo.todoContent }}
     </div>
 
     <img
       class="delete-btn"
       @click="toggleDelete"
+      style="cursor: pointer"
       src="@/assets/circle-substract.png"
     />
   </div>
@@ -31,12 +33,12 @@ const props = defineProps({
 
 const emit = defineEmits(["toggleChange", "toggleDelete"]);
 
-const toggleChange = (index) => {
-  emit("toggleChange", index);
+const toggleChange = (todoNo) => {
+  emit("toggleChange", todoNo);
 };
 
-const toggleDelete = (index) => {
-  emit("toggleDelete", index);
+const toggleDelete = (todoNo) => {
+  emit("toggleDelete", todoNo);
 };
 </script>
 
@@ -52,11 +54,17 @@ const toggleDelete = (index) => {
   position: relative;
 }
 .form-check-input {
+  width: 40px;
+  height: 40px;
   margin: 0 20px;
   margin-right: 40px;
 }
 .delete-btn {
   position: absolute;
   right: 27px;
+}
+.form-check-label {
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 </style>
