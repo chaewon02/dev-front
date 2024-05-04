@@ -45,11 +45,14 @@ const router = useRouter();
 
 let token = localStorage.getItem("userNo");
 if (token) {
-  router.push("/");
+  router.push("/main");
 }
 
 const signin = async () => {
   try {
+    if (localStorage.getItem("userNo")) {
+      localStorage.removeItem("userNo");
+    }
     console.log(loginId.value, "   ", loginPassword.value);
     const response = await axiosInstance.post("/sign-in", {
       userId: loginId.value,
@@ -58,7 +61,7 @@ const signin = async () => {
     localStorage.setItem("userNo", response.data.data.userNo);
     // localStorage.setItem("user", JSON.stringify(response.data.data));
     console.log("signin success ! ", response);
-    router.push("/");
+    router.push("/main");
   } catch (error) {
     console.log("Error signin:", error);
   }

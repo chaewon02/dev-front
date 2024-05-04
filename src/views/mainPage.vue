@@ -1,5 +1,5 @@
 <script setup>
-import MainHeader from "@/components/header/MainHeader.vue";
+import MainHeader from "@/components/header/mainHeader.vue";
 import Board from "@/components/board/BoardContainer.vue";
 </script>
 

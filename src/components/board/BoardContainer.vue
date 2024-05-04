@@ -5,12 +5,11 @@ import Todo from "./TodoCard.vue";
 import axiosInstance from "@/apis/config";
 
 const todos = ref([]);
+let userNo = localStorage.getItem("userNo");
 
 const getTodoList = async () => {
   try {
-    const response = await axiosInstance.get(
-      `/todo/list/${localStorage.getItem("userNo")}`
-    );
+    const response = await axiosInstance.get(`/todo/list/${userNo}`);
     console.log("get todos success ! ", response);
     todos.value = response.data.data;
   } catch (error) {
@@ -20,14 +19,20 @@ const getTodoList = async () => {
 getTodoList();
 
 const addTodo = async (content) => {
-  const todo = {
-    todoContent: content,
-    todoCompleteYn: false,
-    todoDeleteYn: false,
-    userNo: localStorage.getItem("userNo"),
-  };
+  // const todo = {
+  //   todoContent: content,
+  //   todoCompleteYn: false,
+  //   todoDeleteYn: false,
+  //   userNo: localStorage.getItem("userNo"),
+  // };
   try {
-    const response = await axiosInstance.post("/todo/create", todo);
+    console.log("content : ", content);
+    const response = await axiosInstance.post("/todo/create", {
+      todoContent: content,
+      todoCompleteYn: false,
+      todoDeleteYn: false,
+      userNo: userNo,
+    });
     console.log("save todo success ! ", response);
     getTodoList();
   } catch (error) {
