@@ -17,16 +17,15 @@ const router = useRouter();
 
 let token = localStorage.getItem("userNo");
 if (token === null) {
-  router.push("/signin");
+  router.push("/");
 }
 
 const signout = async () => {
   try {
     const response = await axiosInstance.post("/sign-out");
     localStorage.removeItem("userNo");
-    localStorage.removeItem("user");
     console.log("signout success ! ", response);
-    router.push("/signin");
+    router.push("/");
   } catch (error) {
     console.log("Error signout:", error);
   }

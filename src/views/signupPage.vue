@@ -41,7 +41,7 @@ const router = useRouter();
 
 let token = localStorage.getItem("userNo");
 if (token) {
-  router.push("/");
+  router.push("/main");
 }
 </script>
 
