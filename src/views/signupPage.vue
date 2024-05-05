@@ -3,15 +3,15 @@
     <div class="preview-box">
       <h1>팀 이름</h1>
       <div
-        class="list-item"
         v-for="item in [
           '해야할 일을 한 눈에!',
           '쉽고 간편한 사용 방법',
           '로그인 후 000을 사용해 보세요!',
         ]"
         :key="item"
+        class="list-item"
       >
-        <input type="checkbox" checked />
+        <input checked type="checkbox" />
         <span>{{ item }}</span>
         <span class="delete-button">&times;</span>
       </div>
@@ -19,15 +19,15 @@
     <div class="signup-box">
       <div class="input-group">
         <label for="name">이름</label>
-        <input type="name" class="input-field" />
+        <input class="input-field" type="name" />
       </div>
       <div class="input-group">
         <label for="id">아이디</label>
-        <input type="id" class="input-field" />
+        <input class="input-field" type="id" />
       </div>
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input type="password" class="input-field" />
+        <input class="input-field" type="password" />
       </div>
       <router-link to="/" class="signup-button">회원가입</router-link>
     </div>
@@ -39,7 +39,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let token = localStorage.getItem("userNo");
+let token = sessionStorage.getItem("userNo");
 if (token) {
   router.push("/main");
 }
