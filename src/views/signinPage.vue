@@ -28,7 +28,7 @@
         type="password"
       />
       <button class="signIn-button">로그인</button>
-      <router-link class="signup-button" to="/signup">회원가입</router-link>
+      <router-link class="signup-button" to="/sign-up">회원가입</router-link>
     </form>
   </div>
 </template>
