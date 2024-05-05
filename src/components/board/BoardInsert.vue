@@ -1,6 +1,6 @@
 <template>
   <div class="insert-container">
-    <form class="board-menue-container" @submit.prevent="addTodo(todoInsert)">
+    <form class="board-menue-container" @submit.prevent="addTodo">
       <input
         class="todo-input"
         type="text"
@@ -19,8 +19,8 @@ const todoInsert = ref("");
 
 const emit = defineEmits(["addTodo"]);
 
-const addTodo = (content) => {
-  emit("addTodo", content);
+const addTodo = () => {
+  emit("addTodo", todoInsert.value);
   todoInsert.value = "";
 };
 </script>

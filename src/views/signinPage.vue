@@ -43,10 +43,10 @@ const loginPassword = ref("");
 
 const router = useRouter();
 
-let token = localStorage.getItem("userNo");
-if (token) {
-  router.push("/main");
-}
+// let token = localStorage.getItem("userNo");
+// if (token) {
+//   router.push("/main");
+// }
 
 const signin = async () => {
   try {

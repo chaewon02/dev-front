@@ -5,7 +5,7 @@ import Todo from "./TodoCard.vue";
 import axiosInstance from "@/apis/config";
 
 const todos = ref([]);
-let userNo = localStorage.getItem("userNo");
+let userNo = parseInt(localStorage.getItem("userNo"));
 
 const getTodoList = async () => {
   try {
@@ -19,26 +19,21 @@ const getTodoList = async () => {
 getTodoList();
 
 const addTodo = async (content) => {
-  // const todo = {
-  //   todoContent: content,
-  //   todoCompleteYn: false,
-  //   todoDeleteYn: false,
-  //   userNo: localStorage.getItem("userNo"),
-  // };
+  const data = {
+    todoContent: content,
+    todoCompleteYn: false,
+    todoDeleteYn: false,
+    userNo: userNo,
+  };
   try {
-    console.log("content : ", content);
-    const response = await axiosInstance.post("/todo/create", {
-      todoContent: content,
-      todoCompleteYn: false,
-      todoDeleteYn: false,
-      userNo: userNo,
-    });
+    const response = await axiosInstance.post("/todo/create", data);
     console.log("save todo success ! ", response);
     getTodoList();
   } catch (error) {
     console.log("Error save todo:", error);
   }
 };
+
 const toggleChange = async (todoNo) => {
   try {
     const response = await axiosInstance.post(`/todo/complete/${todoNo}`);
@@ -48,6 +43,7 @@ const toggleChange = async (todoNo) => {
     console.log("Error completed todo:", error);
   }
 };
+
 const toggleDelete = async (todoNo) => {
   try {
     const response = await axiosInstance.post(`/todo/delete/${todoNo}`);

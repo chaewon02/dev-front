@@ -29,7 +29,7 @@
         <label for="password">비밀번호</label>
         <input type="password" class="input-field" />
       </div>
-      <router-link to="/signin" class="signup-button">회원가입</router-link>
+      <router-link to="/" class="signup-button">회원가입</router-link>
     </div>
   </div>
 </template>
