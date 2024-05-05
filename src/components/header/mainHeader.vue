@@ -2,7 +2,7 @@
   <nav class="nav-container">
     <div class="logo">todo-list</div>
     <div class="menu">
-      <div class="logout-btn" @click="signout" style="cursor: pointer">
+      <div class="logout-btn" style="cursor: pointer" @click="signout">
         로그아웃
       </div>
     </div>
@@ -15,7 +15,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let token = localStorage.getItem("userNo");
+let token = sessionStorage.getItem("userNo");
 if (token === null) {
   router.push("/");
 }
@@ -23,16 +23,17 @@ if (token === null) {
 const signout = async () => {
   try {
     const response = await axiosInstance.post("/sign-out");
-    localStorage.removeItem("userNo");
+    sessionStorage.removeItem("userNo");
     console.log("signout success ! ", response);
-    router.push("/");
+
+    await router.push("/");
   } catch (error) {
     console.log("Error signout:", error);
   }
 };
 </script>
 
-<style scope>
+<style scoped>
 .nav-container {
   background-color: white;
   width: 100%;

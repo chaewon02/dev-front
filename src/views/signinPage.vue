@@ -3,32 +3,32 @@
     <div class="preview-box">
       <h1>팀 이름</h1>
       <div
-        class="list-item"
         v-for="item in [
           '해야할 일을 한 눈에!',
           '쉽고 간편한 사용 방법',
           '로그인 후 000을 사용해 보세요!',
         ]"
         :key="item"
+        class="list-item"
       >
-        <input type="checkbox" checked />
+        <input checked type="checkbox" />
         <span>{{ item }}</span>
         <span class="delete-button">&times;</span>
       </div>
     </div>
-    <form class="signin-box" @submit.prevent="signin">
+    <form class="signIn-box" @submit.prevent="signIn">
       <input
-        type="text"
         v-model="loginId"
         placeholder="아이디를 입력해 주세요."
+        type="text"
       />
       <input
-        type="password"
         v-model="loginPassword"
         placeholder="비밀번호를 입력해 주세요."
+        type="password"
       />
-      <button class="signin-button">로그인</button>
-      <router-link to="/signup" class="signup-button">회원가입</router-link>
+      <button class="signIn-button">로그인</button>
+      <router-link class="signup-button" to="/signup">회원가입</router-link>
     </form>
   </div>
 </template>
@@ -43,27 +43,38 @@ const loginPassword = ref("");
 
 const router = useRouter();
 
-let token = localStorage.getItem("userNo");
+let token = sessionStorage.getItem("userNo");
+
 if (token) {
   router.push("/main");
 }
 
-const signin = async () => {
+const signIn = async () => {
   try {
-    if (localStorage.getItem("userNo")) {
-      localStorage.removeItem("userNo");
+    if (sessionStorage.getItem("userNo")) {
+      sessionStorage.removeItem("userNo");
     }
+
     console.log(loginId.value, "   ", loginPassword.value);
+
     const response = await axiosInstance.post("/sign-in", {
       userId: loginId.value,
       userPassword: loginPassword.value,
     });
-    localStorage.setItem("userNo", response.data.data.userNo);
-    // localStorage.setItem("user", JSON.stringify(response.data.data));
-    console.log("signin success ! ", response);
-    router.push("/main");
+
+    if (response.data.data === null) {
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+      return;
+    } else {
+      alert("로그인 성공!");
+      sessionStorage.setItem("userNo", response.data.data.userNo);
+    }
+
+    console.log("signIn success ! ", response);
+
+    await router.push("/main");
   } catch (error) {
-    console.log("Error signin:", error);
+    console.log("[Error] : ", error);
   }
 };
 </script>
@@ -120,7 +131,7 @@ h1 {
   text-align: left;
 }
 
-.signin-box {
+.signIn-box {
   margin: auto;
   background-color: white;
   position: fixed;
@@ -135,18 +146,17 @@ h1 {
   align-items: center;
 }
 
-.signin-box input {
+.signIn-box input {
   background-color: #d9d9d9;
   border: none;
   width: 320px;
   height: 50px;
-  margin: 10px;
   padding: 10px;
   font-size: 20px;
-  margin-bottom: 20px;
+  margin: 10px 10px 20px;
 }
 
-.signin-button {
+.signIn-button {
   background: none;
   border: none;
   cursor: pointer;
