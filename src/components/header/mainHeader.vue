@@ -2,7 +2,7 @@
   <nav class="nav-container">
     <div class="logo">todo-list</div>
     <div class="menu">
-      <div class="logout-btn" style="cursor: pointer" @click="signout">
+      <div class="logout-btn" style="cursor: pointer" @click="signOut">
         로그아웃
       </div>
     </div>
@@ -20,7 +20,7 @@ if (token === null) {
   router.push("/");
 }
 
-const signout = async () => {
+const signOut = async () => {
   try {
     const response = await axiosInstance.post("/sign-out");
     sessionStorage.removeItem("userNo");
