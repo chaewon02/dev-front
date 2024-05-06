@@ -52,13 +52,17 @@ const getTodoList = async () => {
   }
 };
 
-watchEffect(() => {
-  getTodoList();
-});
-
 onMounted(() => {
   userNo = sessionStorage.getItem("userNo");
   getTodoList();
+});
+
+watchEffect(() => {
+  getTodoList();
+  console.log(
+    "Todo list refreshed because of change trigger:",
+    todoChangeTrigger.value
+  );
 });
 
 const addTodo = async () => {
@@ -71,6 +75,7 @@ const addTodo = async () => {
     });
     todoInsert.value = "";
     triggerTodoListRefresh();
+    console.log(todoChangeTrigger.value);
     console.log("save todo success ! ", response.data.data);
   } catch (error) {
     console.log("Error save todo:", error);
@@ -82,6 +87,7 @@ const toggleChange = async (todoNo) => {
     const response = await axiosInstance.post(`/todo/complete/${todoNo}`);
     console.log("completed todo success ! ", response.data.data);
     triggerTodoListRefresh();
+    console.log(todoChangeTrigger.value);
   } catch (error) {
     console.log("Error completed todo:", error);
   }
@@ -92,6 +98,7 @@ const toggleDelete = async (todoNo) => {
     const response = await axiosInstance.post(`/todo/delete/${todoNo}`);
     console.log("delete todo success ! ", response.data.data);
     triggerTodoListRefresh();
+    console.log(todoChangeTrigger.value);
   } catch (error) {
     console.log("Error delete todo:", error);
   }
