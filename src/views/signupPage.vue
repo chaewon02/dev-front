@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="preview-box">
       <h1>팀 이름</h1>
       <div
@@ -68,6 +68,12 @@ const signUp = async () => {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 70px;
+}
+
 h1 {
   text-align: center;
   position: relative;
@@ -128,7 +134,6 @@ input[type="password"] {
 .signup-box {
   margin: auto;
   background-color: white;
-  position: fixed;
   right: 300px;
   top: 250px;
   padding: 20px;
@@ -169,5 +174,19 @@ input[type="password"] {
   display: block;
   margin: 0 auto;
   margin-top: 40px;
+}
+
+@media (max-width: 1920px) {
+  .signIn-box {
+    position: static;
+    right: auto;
+    top: auto;
+  }
+
+  .preview-box {
+    position: static;
+    left: auto;
+    top: auto;
+  }
 }
 </style>
