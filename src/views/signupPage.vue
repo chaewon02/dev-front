@@ -19,30 +19,52 @@
     <div class="signup-box">
       <div class="input-group">
         <label for="name">이름</label>
-        <input class="input-field" type="name" />
+        <input class="input-field" type="text" v-model="name" />
       </div>
       <div class="input-group">
         <label for="id">아이디</label>
-        <input class="input-field" type="id" />
+        <input class="input-field" type="text" v-model="id" />
       </div>
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input class="input-field" type="password" />
+        <input class="input-field" type="password" v-model="password" />
       </div>
-      <router-link to="/" class="signup-button">회원가입</router-link>
+      <button class="signup-button" @click="signUp">회원가입</button>
     </div>
   </div>
 </template>
 
 <script setup>
+import axiosInstance from "@/apis/config";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let token = sessionStorage.getItem("userNo");
-if (token) {
-  router.push("/main");
-}
+const name = ref("");
+const id = ref("");
+const password = ref("");
+
+const signUp = async () => {
+  try {
+    const response = await axiosInstance.post("/sign-up", {
+      userName: name.value,
+      userId: id.value,
+      userPassword: password.value,
+    });
+
+    if (response.data.status == "success") {
+      alert("회원가입 성공! 로그인 페이지로 이동합니다.");
+    } else {
+      alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+    }
+
+    console.log("회원가입 성공", response.data);
+    await router.push("/");
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <style scoped>
