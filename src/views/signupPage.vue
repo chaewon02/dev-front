@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="preview-box">
-      <h1>팀 이름</h1>
+      <h1>HR Do-Dos</h1>
       <div
         v-for="item in [
           '해야할 일을 한 눈에!',
           '쉽고 간편한 사용 방법',
-          '로그인 후 000을 사용해 보세요!',
+          '로그인 후 HR Do-Dos를 사용해 보세요!',
         ]"
         :key="item"
         class="list-item"
@@ -30,6 +30,9 @@
         <input class="input-field" type="password" v-model="password" />
       </div>
       <button class="signup-button" @click="signUp">회원가입</button>
+      <router-link class="cancel-button" to="/">
+        <button class="cancel-button">취소</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -47,6 +50,11 @@ const password = ref("");
 
 const signUp = async () => {
   try {
+    if (!name.value.trim() || !id.value.trim() || !password.value.trim()) {
+      alert("이름, 아이디, 비밀번호를 모두 입력해주세요!");
+      return;
+    }
+
     const response = await axiosInstance.post("/sign-up", {
       userName: name.value,
       userId: id.value,
@@ -78,6 +86,8 @@ h1 {
   text-align: center;
   position: relative;
   top: -70px;
+  font-family: "Bangers", sans-serif;
+  font-size: 60px;
 }
 
 .preview-box {
@@ -174,6 +184,17 @@ input[type="password"] {
   display: block;
   margin: 0 auto;
   margin-top: 40px;
+}
+
+.cancel-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  text-decoration: none;
 }
 
 @media (max-width: 1920px) {

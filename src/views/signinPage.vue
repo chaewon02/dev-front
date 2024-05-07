@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="preview-box">
-      <h1>팀 이름</h1>
+      <h1>HR Do-Dos</h1>
       <div
         v-for="item in [
           '해야할 일을 한 눈에!',
           '쉽고 간편한 사용 방법',
-          '로그인 후 000을 사용해 보세요!',
+          '로그인 후 HR Do-Dos를 사용해 보세요!',
         ]"
         :key="item"
         class="list-item"
@@ -28,7 +28,9 @@
         type="password"
       />
       <button class="signIn-button">로그인</button>
-      <router-link class="signup-button" to="/sign-up">회원가입</router-link>
+      <router-link class="signup-button" to="/sign-up">
+        <button class="signup-button">회원가입</button>
+      </router-link>
     </form>
   </div>
 </template>
@@ -51,6 +53,11 @@ if (token) {
 
 const signIn = async () => {
   try {
+    if (!loginId.value.trim() || !loginPassword.value.trim()) {
+      alert("아이디, 비밀번호를 올바르게 입력해 주세요!");
+      return;
+    }
+
     if (sessionStorage.getItem("userNo")) {
       sessionStorage.removeItem("userNo");
     }
@@ -90,6 +97,8 @@ h1 {
   text-align: center;
   position: relative;
   top: -70px;
+  font-family: "Bangers", sans-serif;
+  font-size: 60px;
 }
 
 .preview-box {
