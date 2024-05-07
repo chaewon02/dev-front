@@ -24,7 +24,7 @@ RUN npm install -g json-server@0.17.0
 RUN npm install vuex@next --save
 
 # 3000번 포트 노출
-EXPOSE 8080
+EXPOSE 3000
 
 # npm start 스크립트 실행
 # CMD ["json-server", "--watch", "db.json"]
