@@ -75,6 +75,10 @@ const signIn = async () => {
     await router.push("/main");
   } catch (error) {
     console.log("[Error] : ", error);
+
+    if (error.code === "ERR_BAD_REQUEST") {
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+    }
   }
 };
 </script>
