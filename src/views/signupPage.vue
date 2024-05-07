@@ -79,7 +79,7 @@ const signUp = async () => {
 .container {
   display: flex;
   flex-direction: row;
-  margin-top: 70px;
+  height: 100vh;
 }
 
 h1 {
@@ -197,7 +197,7 @@ input[type="password"] {
   text-decoration: none;
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 2560px) {
   .signIn-box {
     position: static;
     right: auto;
