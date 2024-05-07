@@ -161,10 +161,6 @@ input[type="password"] {
   margin: 10px 0;
 }
 
-.input-group label {
-  font-size: 20px;
-}
-
 .signup-box input {
   background-color: #d9d9d9;
   border: none;
