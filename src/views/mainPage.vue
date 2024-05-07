@@ -10,9 +10,4 @@ import Board from "@/components/board/BoardContainer.vue";
   </div>
 </template>
 
-<style>
-.board-container {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style></style>
