@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <div class="preview-box">
-      <h1>팀 이름</h1>
+      <h1>HR Do-Dos</h1>
       <div
         v-for="item in [
           '해야할 일을 한 눈에!',
           '쉽고 간편한 사용 방법',
-          '로그인 후 000을 사용해 보세요!',
+          '로그인 후 HR Do-Dos를 사용해 보세요!',
         ]"
         :key="item"
         class="list-item"
@@ -19,37 +19,75 @@
     <div class="signup-box">
       <div class="input-group">
         <label for="name">이름</label>
-        <input class="input-field" type="name" />
+        <input class="input-field" type="text" v-model="name" />
       </div>
       <div class="input-group">
         <label for="id">아이디</label>
-        <input class="input-field" type="id" />
+        <input class="input-field" type="text" v-model="id" />
       </div>
       <div class="input-group">
         <label for="password">비밀번호</label>
-        <input class="input-field" type="password" />
+        <input class="input-field" type="password" v-model="password" />
       </div>
-      <router-link class="signup-button" to="/signin">회원가입</router-link>
+      <button class="signup-button" @click="signUp">회원가입</button>
+      <router-link class="cancel-button" to="/">
+        <button class="cancel-button">취소</button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
+import axiosInstance from "@/apis/config";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let token = sessionStorage.getItem("userNo");
-if (token) {
-  router.push("/main");
-}
+const name = ref("");
+const id = ref("");
+const password = ref("");
+
+const signUp = async () => {
+  try {
+    if (!name.value.trim() || !id.value.trim() || !password.value.trim()) {
+      alert("이름, 아이디, 비밀번호를 모두 입력해주세요!");
+      return;
+    }
+
+    const response = await axiosInstance.post("/sign-up", {
+      userName: name.value,
+      userId: id.value,
+      userPassword: password.value,
+    });
+
+    if (response.data.status == "success") {
+      alert("회원가입 성공! 로그인 페이지로 이동합니다.");
+    } else {
+      alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+    }
+
+    console.log("회원가입 성공", response.data);
+    await router.push("/");
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
 h1 {
   text-align: center;
   position: relative;
   top: -70px;
+  font-family: "Bangers", sans-serif;
+  font-size: 60px;
 }
 
 .preview-box {
@@ -106,7 +144,6 @@ input[type="password"] {
 .signup-box {
   margin: auto;
   background-color: white;
-  position: fixed;
   right: 300px;
   top: 250px;
   padding: 20px;
@@ -147,5 +184,30 @@ input[type="password"] {
   display: block;
   margin: 0 auto;
   margin-top: 40px;
+}
+
+.cancel-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+@media (max-width: 2560px) {
+  .signIn-box {
+    position: static;
+    right: auto;
+    top: auto;
+  }
+
+  .preview-box {
+    position: static;
+    left: auto;
+    top: auto;
+  }
 }
 </style>
