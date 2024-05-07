@@ -1,6 +1,8 @@
 <template>
   <nav class="nav-container">
-    <div class="logo">todo-list</div>
+    <div class="logo">
+      <div>{{ title }}</div>
+    </div>
     <div class="menu">
       <div class="logout-btn" style="cursor: pointer" @click="signOut">
         로그아웃
@@ -11,21 +13,26 @@
 
 <script setup>
 import axiosInstance from "@/apis/config";
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-let token = sessionStorage.getItem("userNo");
-if (token === null) {
-  router.push("/");
-}
+let userName = sessionStorage.getItem("userName");
+const title = `${userName}'s todo-list`;
+
+onMounted(() => {
+  let token = sessionStorage.getItem("userNo");
+  if (token === null) {
+    router.push("/");
+  }
+});
 
 const signOut = async () => {
   try {
     const response = await axiosInstance.post("/sign-out");
     sessionStorage.removeItem("userNo");
     console.log("signout success ! ", response);
-
     await router.push("/");
   } catch (error) {
     console.log("Error signout:", error);
@@ -45,10 +52,16 @@ const signOut = async () => {
 }
 
 .logo {
-  font-size: 20px;
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 40px;
   font-weight: bolder;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
 }
+/* .logo > div {
+  font-family: "Bangers", sans-serif;
+} */
 
 .menu {
   position: absolute;
@@ -56,7 +69,8 @@ const signOut = async () => {
   display: flex;
 }
 
-.menu p {
+.menu div {
   font-size: 15px;
+  font-weight: 600;
 }
 </style>

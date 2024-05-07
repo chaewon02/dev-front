@@ -4,8 +4,8 @@
       <h1>HR Do-Dos</h1>
       <div
         v-for="item in [
-          '해야할 일을 한 눈에!',
-          '쉽고 간편한 사용 방법',
+          '해야 할 일을 한눈에!',
+          '쉽고 간편한 사용방법',
           '로그인 후 HR Do-Dos를 사용해 보세요!',
         ]"
         :key="item"
@@ -86,7 +86,7 @@ h1 {
   text-align: center;
   position: relative;
   top: -70px;
-  font-family: "Bangers", sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: 60px;
 }
 

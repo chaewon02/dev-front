@@ -75,6 +75,7 @@ const signIn = async () => {
     } else {
       alert("로그인 성공!");
       sessionStorage.setItem("userNo", response.data.data.userNo);
+      sessionStorage.setItem("userName", response.data.data.userName);
     }
 
     console.log("signIn success ! ", response);
@@ -101,7 +102,7 @@ h1 {
   text-align: center;
   position: relative;
   top: -70px;
-  font-family: "Bangers", sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: 60px;
 }
 
