@@ -82,6 +82,10 @@ const signIn = async () => {
     await router.push("/main");
   } catch (error) {
     console.log("[Error] : ", error);
+
+    if (error.code === "ERR_BAD_REQUEST") {
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+    }
   }
 };
 </script>
@@ -90,7 +94,7 @@ const signIn = async () => {
 .container {
   display: flex;
   flex-direction: row;
-  margin-top: 70px;
+  height: 100vh;
 }
 
 h1 {
@@ -186,7 +190,7 @@ h1 {
   font-size: 20px;
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 2560px) {
   .signIn-box {
     position: static;
     right: auto;
